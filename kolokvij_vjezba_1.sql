@@ -135,16 +135,20 @@ delete from punac where vesta!='AB';
 select *, suknja from mladic where maraka not in (7,11,18,25 or 40);
 select * from mladic;
 
-#Prikažite vesta iz tablice sestra, prviputa iz tablice punac te jmbag iz tablice cura uz uvjet da su vrijednosti kolone maraka iz tablice mladic različito od 95te da su vrijednosti kolone bojaociju iz tablice ostavljena sadrže niz znakova ba. Podatke posložite po jmbag iz tablice cura silazno.
+#5. Prikažite narukvica iz tablice snasa, prviputa iz tablice punac te jmbag iz tablice cura uz uvjet da su vrijednosti kolone maraka iz tablice mladic različito od 95 te da su vrijednosti kolone bojaociju iz tablice ostavljena sadrže niz znakova ba. Podatke posložite po jmbag iz tablice cura silazno.
 
-select d.prviputa, c.jmbag
-from ostavljena a 
-inner join mladic b on a.sifra=b.ostavljena
-inner join cura c on b.sifra=c.mladic 
-inner join punac d on c.sifra=d.cura
-where b.maraka!=95 and a.bojaociju='%ba%';
+select f.narukvica , a.prviputa , b.jmbag
+from punac a inner join cura b on a.cura =b.sifra
+inner join mladic c on b.mladic =c.sifra
+inner join ostavljena d on c.ostavljena =d.sifra
+inner join ostavljena_snasa e on e.ostavljena =d.sifra
+inner join snasa f on e.snasa =f.sifra
+where c.maraka != 95 and d.bojakose like '%ba%'
+order by b.jmbag desc
 
-#Prikažite kolone bojaociju i suknja iz tablice ostavljena čiji se primarni ključ ne nalaze u tablici ostavljena_snasa.
-select bojaociju,suknja from ostavljena
-where sifra not in (select ostavljena from ostavljena_snasa);
 
+#6. Prikažite kolone bojaociju i suknja iz tablice ostavljena čiji se primarni ključ ne nalaze u tablici ostavljena_snasa.
+
+select a.bojaociju , a.suknja
+from ostavljena a left join ostavljena_snasa b on a.sifra =b.ostavljena
+where b.ostavljena is null;
