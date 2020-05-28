@@ -133,8 +133,8 @@ update svekar set suknja='Osijek';
 select * from punica;
 
 insert into punica(asocijalno,kratkamajica,kuna,vesta,snasa) values
-(1,'AB','200','Crvena',1),
-(1,'Plava','300','Crvena',2),
+(1,'AB','200','Plava',1),
+(1,'Plava','300','Žuta',2),
 (1,'Žuta','500','Crvena',3);
 
 delete from punica where kratkamajica='AB';
